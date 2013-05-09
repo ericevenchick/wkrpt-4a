@@ -215,9 +215,8 @@
     {\@chair, Director\\*\@chairaddress\par\noindent}%
     {\@chair, Chair\\*\@chairaddress\par\noindent}%
   Dear \@chair:%
-  \ifthenelse{\boolean{uwwkrpt@se}}
-    {\par}
-    {\begin{center}\textbf{Re: Submission of my work term report.}\end{center}}}
+  \par
+  }
   {\par I hereby confirm that I have received no further help, other
   than what is mentioned above, in writing this report.
   \ifthenelse{\boolean{uwwkrpt@ece}

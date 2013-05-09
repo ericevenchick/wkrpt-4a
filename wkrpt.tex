@@ -43,13 +43,13 @@ Applications}
 \email{eric@evenchick.com}
 
 % Fill in your term.
-\term{4A}
+\term{3B}
 
 % Fill in your program.
 \program{Electrical Engineering}
 
 % Fill in the department chair's name.
-\chair{Dr.\ A.\ Vannelli}
+\chair{Manoj Sachdev}
 
 % Fill in the department chair's mailing address.
 \chairaddress{E\&CE Department,\\*
@@ -77,21 +77,22 @@ Applications}
 
 % After this, we must create a letter of submission.
 \begin{letter}
-I have just completed my first work term, following my \theterm{} term.
-Please find enclosed my first work term report entitled:
-``\thetitle'' for the Software Widgets group at \theemployer.  
-My departmental manager was Rube Goldberg
-and our group was primarily involved with writing and testing
-of labour-saving software.
+This report, entitled ``\thetitle", was prepared during my \theterm{} Work Term
+for my WKRPT 300 course. This is a self study report, and covers work that I 
+performed with the University of Waterloo Alternative Fuels Team.
 
-This report focuses on using the unofficial work report
-documentation class, \texttt{uw-wkrpt.cls}, and provides a
-sample document on which to base your own E\&CE report.  It is written for
-fellow classmates who have some working knowledge of \LaTeX{} and \TeX{}.
+The report covers my work with the center stack development group of the
+Alternative Fuels Team, which is responsible for designing a human-machine
+interface for the team's hybrid vehicle. This report covers the design and
+development of the system. It has been written for the team, as well as
+to satisfy my Work Term report requirements.
 
-I have had no direct assistance from anyone.  I do wish to thank Leslie 
-Lamport and Donald E. Knuth for inventing such marvellous typesetting
-tools.
+I have had no direct assistance from anyone, however I have made use of
+Freescale's application notes to implement the design.
+I hereby confirm that I have received no further help other than what is
+mentioned above in writing this report. I also confirm this report has not
+been previously submitted for academic credit at this or
+any other academic institution.
 
 % Note that I do not need to type out the boilerplate confirmation,
 % nor do I need to write a signature block.  This is generated for me.
@@ -102,46 +103,34 @@ tools.
 \begin{onehalfspacing}
 \section{Contributions}
 
-I worked in the Software Widgets group, which consisted of 2 animators,
-6 cartoon characters, 3 software developers and 2 testers.  We were to
-design labour-saving computerised devices, for internal consumption.
-Being self-sufficient, we were involved in the research, design,
-implementation and testing for all our software widgets.
+The University of Waterloo Alternative Fuels Team is a Waterloo student
+team that participates in Advanced Vehicle Technology Competitions. Currently,
+the team is taking part in the EcoCAR2 competition.
 
-Over the course of four months, we created three of these widgets.
-I was responsible for writing software.  I looked at the design
-specifications, and wrote test-suites and software to meet them.
-The testers would add to my rudimentary test suites, and report
-errors to me whenever a test failed.
+For this project, I worked with a small group of students responsible for the
+center stack development of the vehicle. The main goal of the group was to
+implement a center stack for the vehicle. This piece of hardware consists of a
+touchscreen and an embedded computer that allows the driver to interact with the
+vehicle.
 
-From the experiences in creating documentation for my programs, I
-acquired expertise in \LaTeX{}, which I found to be an excellent
-typesetting system.  Armed with this knowledge, I was able to use this
-wonderful document class which eases the typesetting of work
-reports, and follows the E\&CE guidelines~\cite{ref:eceguidelines} and
-the Co-op student manual~\cite{ref:coopman}.
+My tasks were to lead the project, get the low level software working on the
+hardware, and write an abstraction level to allow developers to access the car's
+internal network.
 
-From this sample work report, anyone can create a report that looks
-good, and is easy to read.  Acme will benefit, because they now have a
-document class to provide to future co-op students, thereby reducing the
-time they spend on formatting reports.
+This report is related to the work since it details the design that was used for
+the center stack software. It shows the use of engineering skills to design and
+implement an embedded system for a real world application.
+
+In the broader scheme of things, the resulting system lead to the creation of
+tools that are useful for designing Linux based systems, and for interacting
+with vehicles from a Linux based system. These tools will be explained in the
+report, and will be released as open source projects for others looking to
+implement similar solutions.
 
 \section{Summary}
-This document describes the use of the \texttt{uw-wkrpt.cls}
-document class in creating work reports.  Written in the 
-\LaTeX{} macro language, this document class is designed to typeset 
-documents that conform to the University of Waterloo co-op student 
-manual~\cite{ref:coopman} requirements.  The class has been generalised
-from the earlier \texttt{uw-ece-workreport} document class so that it
-may be used by students of any faculty.  This particular report 
-serves as an example for the University of Waterloo, Electrical and 
-Computer Engineering work report guidelines~\cite{ref:eceguidelines}.  
-Other example reports for other faculties are included with this package.
 
-I also argue the advantages of using this document class over other
-more traditional ways of generating a report.  I hope to convince the
-reader that using this technology is superior to writing the document
-in a WYSIWYG word processor.
+Summary!
+
 \end{onehalfspacing}
 
 % Next, we need to make a Table of Contents, List of Figures and 
@@ -160,92 +149,123 @@ in a WYSIWYG word processor.
 \mainmatter
 
 \section{Introduction}\label{sec:intro}
-This pretend report, written by an imaginary student,
-exists because I got sick of writing a report,
-and having to check my document over and over again for simple
-formatting errors.  Now, I thought that a work report is useful
-due to its content; not because my Table of Contents did not have dot
-leading for page numbers.  So, I turned to \LaTeX{} as my saviour.
 
-I, Simon Law, implemented my first work report in \LaTeX{} in early
-December 2001.  Unfortunately, I was feeling my way around and didn't
-implement my scheme very well.  After learning how to create a
-document class, I have created this document class, which I now offer 
-to you.
+For the EcoCAR2 Advanced Vehicle Technology Competition, the University of
+Waterloo Alternative Fuels Team (UWAFT) was tasked with designing, implementing,
+and testing a vehicle to reduce environmental impact while maintaining or
+improving consumer acceptability. The competition spans three years. In the
+first year, the team does design and modeling of the vehicle architecture. In
+year two, the team builds a prototype vehicle. In the third year, the team
+attempts to get the vehicle to a consumer ready state. The competition is
+currently in year two.
 
-If you find a problem with this document class, or have suggestions to
-offer; please drop me a note.  As well, patches and fixes are always
-welcome.  You can find information on how to contact me in Appendix 
-\ref{app:colophon}.
+One component of the vehicle design is a center stack: a device that allows the
+driver to see critical information and interact with the vehicle. This center
+stack is required to display certain signals from the vehicle's Controller Area
+Network (CAN) bus in order to ensure that the vehicle is in a safe state. It
+also has the potential to increased the consumer acceptability of the vehicle
+by providing new features.
 
-\section{Advantages}
-Using this class has a number of great advantages:
+This report will detail the design of the center stack system. It will first
+explain the hardware used to implement the system. Next, the operating system
+used to build the system will be discussed. The low level communications
+software design will be then discussed. The graphical user interface (GUI) will
+be explained. Finally, conclusions and recommendations for the project will be
+provided.
 
-\begin{itemize}
-  \item You no longer have to worry about missing information.  If you fill
-        in all the information at the top of this document, your title page
-        and all the important fields in your Letter of Submittal will be
-        properly filled.
+\section{Hardware}
 
-  \item Your references will be all correct.  Your Table of Contents,
-        List of Figure and List of Tables will be automatically generated.
-        Citations and references will be done properly, and your bibliography
-        will be automatically formatted in IEEE style.
+The project was sponsored by Freescale Semiconductor, who provided hardware and
+technical support. A "Smart Application Blueprint for Rapid Engineering" (SABRE)
+platform based on the i.MX6 quad-core ARM Cortex-A9 application processor was
+given to all teams participating in the competition. This platform provides a
+powerful Central Processing Unit (CPU) and Graphics Processing Unit (GPU) which
+is capable of running complex applications.
 
-  \item You can cross-reference other sections trivially, 
-        (\emph{e.g.} One can find the introduction at \S\ref{sec:intro}, 
-        p.\pageref{sec:intro}).
+The standard for communications between automotive controllers is CAN. This
+protocol provides reliable communication that is suitable for high noise
+environments such as an automobile. The SABRE platform provides one high speed
+and one low speed CAN interface. These are implemented using the Freescale
+FlexCAN peripheral, which is supported in the Linux kernel.
 
-  \item You no longer have to worry if your document looks good.  You can
-        ask the computer to worry about formatting and styles, without having to
-        mess around with differing fonts (roman, \textsf{sans-serif},
-        \texttt{fixed}) or with differing styles (normal, \textbf{bold},
-        \textit{italics}, \underline{underlined}, \textsl{slanted},
-        \textsc{small-caps}).  You can concentrate on what you write, and are
-        assured that your text will look great.
+In the vehicle, the high speed CAN channel is used to communicate with the
+battery management system and the vehicle's supervisory controller. By writing
+software for the supervisory controller, messages can be sent to the center
+stack over CAN. The low speed CAN channel is used to connect to the vehicle's
+Heating, Ventilation, and Air Conditioning (HVAC) system. This allows the center
+stack to control the stock HVAC system based on inputs to the touchscreen.
 
-  \item Since the computer formats things for you, you can re-arrange
-        sections trivially.  Or you can define new styles to make global changes
-        across the entire document.
+The touchscreen was also provided by Freescale Semiconductor. It is a 10.1 inch
+tablet touchscreen, which communicates over a Low Voltage Differential Signaling
+(LVDS) interface with the SABRE platform. The capacitive touch input is
+processed by an eGalax controller, which is supported in the Linux kernel. The
+screen is used in a portrait orientation so that it fits in the vehicle's
+dashboard.
 
-  \item Math output is by far superior in \LaTeX.  You can write things
-        like $\sum_{i=1}^{\infty} \frac{1}{x}$ or:
-        \[\int_{0}^{\infty} \delta(x)\,dx = u(x) + C\]
-\end{itemize}
+The system is powered by the vehicle's 12 volt system. It was connected to the
+auxiliary power port, often called the cigarette lighter port. This port is
+only switched on when the vehicle's key is in the accessory or run states,
+ensuring that the system cannot drain the vehicle's 12 volt battery when the car
+is off. While connecting to this power source was convenient, it is not ideal
+since the system must be turned off when the car is powered off. The system must
+also start from a fully powered off state every time the car is started. In the
+future, it may be necessary to change to an always on power source to allow the 
+system to control its own power state. This would allow for the system to use a 
+low power sleep or hibernate mode to enable a faster boot up time without taxing 
+the car's 12 volt battery.
 
-\section{What are \TeX{} and \LaTeX{}?}
-%
-\TeX{} was designed and implemented by Donald E. Knuth, the famous author
-of \textit{The art of computer programming}~\cite{ref:taocp}.  Knuth,
-shown in Figure \ref{fig:knuth}, decided to create a typesetting language
-that would handle mathematical output beautifully.  This was motivated
-by the fact that publishers would mangle the formul\ae of his
-\textit{magnum opus}.  Now, \TeX{} is used by the mathematical,
-academic, and documentation communities to typeset beautiful
-documents.  The \TeX{} language is designed to provide precise control
-for text layout.
+The platform also has support for Universal Serial Bus (USB) devices, and audio
+output. These features have not yet been utilized, but will be useful for future
+expansion.
 
-% Here is a figure.  You MUST cite the figure in the text before it appears.
-%
-% I include an external picture here.  This picture is called don-hires.pdf.
-% Notice how I do not specify the extension of the file.  pdfLaTeX knows
-% about PDFs only, so get your pictures into that format.
-\begin{figure}
-  \centering
-  \includegraphics[height=3.0in]{don-hires}
-  \caption[Donald E. Knuth, the creator of \TeX{}.]
-          {Donald E. Knuth, the creator of \TeX{}.~\cite{ref:donpicture}}
-  \label{fig:knuth}
-\end{figure}
+\section{Operating System}
 
-\LaTeX{} was designed and implemented by Leslie Lamport while he worked
-at Digital Equipment Corp.  \LaTeX{} was his attempt to create a
-documentation system that was easier to use than \TeX{}.  In fact,
-\LaTeX{} is frequently called a ``document processor'' as opposed to a
-``word processor,'' because it abstracts away the hard details of
-formatting and typesetting, allowing the author to use a semantic
-language to describe the output.
+The operating system for the system consists of three main parts: the
+bootloader, the kernel, and the root filesystem. These components are loaded
+onto a memory card, which the system executes code from when it is powered on.
 
+\subsection{Bootloader}
+
+The bootloader is responsible for setting up the hardware immediately after it
+is powered on. The system uses "u-boot" as it's bootloader. This bootloader was
+chosen since Freescale provides a working image that supports the Linux kernel.
+
+\subsection{Kernel}
+
+The kernel is responsible for controlling the hardware during execution, and
+providing a hardware abstraction layer for programs. The system uses the Linux
+kernel. Linux was chosen for a number of reasons. New versions of Linux provide
+support for the i.MX6Q which can be enabled by compiling a custom kernel.
+Support for CAN and the Freescale FlexCAN peripheral is also available in new
+kernels, along with support for the eGalax touchscreen.
+
+QNX was evaluated as an alternative to Linux for this project. However, support
+for CAN was not reliable. Since CAN is critical to the design of the system, it
+was decided that QNX would not be a viable choice.
+
+\subsection{Root Filesystem}
+
+The kernel provides the basics for running a system, but the root filesystem
+provides all of the other functionality. Freescale provides two options for root
+filesystems: Ubuntu and Linux Target Image Builder (LTIB).
+
+The Ubuntu root filesystem provided by Freescale is a full Ubuntu Desktop
+system. It is the Oneiric Ocelot release, which is from October, 2011 and will
+lose support soon. Since the desktop release is far too bloated for the system,
+and support will soon be dropped, this was not an ideal solution.
+
+LTIB is provided for users that wish to build their own root filesystem. It does
+this by cross compiling software for the target. Unfortunately, much of the
+software provided by LTIB is rather out of date. Also, LTIB does not provide a
+packaging system to allow easy deployment of new software. For these reasons,
+LTIB was not considered to be ideal.
+
+Instead of using a provided root filesystem, the Ubuntu Core root filesystem was
+used. This is a very minimal installation which includes a package manager. Due
+to some challenges with deploying a Ubuntu Core root filesystem, a tool called
+"core-builder" was created to build custom systems based on Ubuntu Core.
+
+\section{The core-builder Build System}
 
 \section{Learning \LaTeX}
 \newcommand{\us}{\hspace{-0.1ex}}
