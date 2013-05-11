@@ -222,7 +222,11 @@ the car's 12 volt battery.
 
 The platform also has support for Universal Serial Bus (USB) devices, and audio
 output. These features have not yet been utilized, but will be useful for future
-expansion.
+expansion. The team has considered adding additional hardware for connectivity.
+A Wi-Fi interface could be connected through the USB port and allow for
+communication with smartphones and computers near the vehicle. A cellular data
+modem could also be connected via USB, and allow for access to the internet.
+This additional hardware creates a wealth of new opportunities.
 
 \section{Operating System}
 
@@ -233,8 +237,15 @@ onto a memory card, which the system executes code from when it is powered on.
 \subsection{Bootloader}
 
 The bootloader is responsible for setting up the hardware immediately after it
-is powered on. The system uses "u-boot" as it's bootloader. This bootloader was
+is powered on. The system uses u-boot as it's bootloader. This bootloader was
 chosen since Freescale provides a working image that supports the Linux kernel.
+
+The bootloader allows for parameters to be passed to the Linux kernel. In order
+to set the board up properly, the 'can0' argument must be passed to enable the
+high speed CAN channel. Also, the correct video argument must be specified
+depending on the device that is to be used. The bootloader settings can be
+changed by connecting to the SABRE's serial port and sending commands to the
+bootloader.
 
 \subsection{Kernel}
 
@@ -244,6 +255,10 @@ kernel. Linux was chosen for a number of reasons. New versions of Linux provide
 support for the i.MX6Q which can be enabled by compiling a custom kernel.
 Support for CAN and the Freescale FlexCAN peripheral is also available in new
 kernels, along with support for the eGalax touchscreen.
+
+In order to support the SABRE hardware, a custom kernel had to be built. This
+was done by using the latest kernel sources and configuring for the i.MX6Q,
+eGalax touchscreen, and the FlexCAN peripheral.
 
 QNX was evaluated as an alternative to Linux for this project. However, support
 for CAN was not reliable. Since CAN is critical to the design of the system, it
@@ -287,15 +302,21 @@ host computer such as a desktop or laptop. It then allows the user to install
 packages and build a system suitable for the application. Finally, the user can
 deploy this package to their target system.
 
-The tool is built using GNU Make CITE. Using a collection of Makefiles, the tool will
-execute the steps needed to set up the environment:
+To allow the filesystem to be manipulated on a host computer which uses a
+different architecture than the target, QEMU user emulation is used. This type
+of emulation allows binaries for a different architecture to be executed on the
+host computer. For example, a x86 host operating system is used to build the
+root filesystem for the ARM target.
+
+The tool is built using GNU Make CITE. Using a collection of Makefiles, the 
+tool will execute the steps needed to set up the environment:
 
 \begin{enumerate}
   \item Download the specified version of the tarball,
   \item Extract the tarball,
   \item Set up resolv.conf to allow for name server resolution,
-  \item Move qemu-static-arm to the root filesystem to allow binaries for ARM to
-  be executed on a x86 host computer.
+  \item Move qemu-static-arm to the root filesystem to enable QEMU user
+  emulation
 \end{enumerate}
 
 Once this is complete, the user can specify packages to install. The Debian
@@ -314,7 +335,7 @@ In order to provide a bridge between applications running on the center stack
 system and the vehicle's CAN bus, a custom daemon was created. This daemon uses
 Socket CAN CITE to communicate with the vehicle, and ZeroMQ CITE to communicate
 with other applications on the system. It consists of two separate servers:
-Carpub and carctl.
+Carpub and Carctl.
 
 A number of inter-process communication tools were considered for the
 implementation of Carserver. ZeroMQ was chosen for a number of reasons. First,
@@ -323,10 +344,20 @@ supporting libraries in a variety of languages. Finally, it is network based,
 allowing the possibility of expanding to other devices over a traditional
 Ethernet or WiFi network.
 
+\begin{figure}
+    \centering
+    \includegraphics[width=6.0in]{carserver}
+    \caption[The Carserver Architecture]
+            {The Carserver Architecture}
+    \label{fig:carserver}
+\end{figure}
+
 Using a server and client model for developing the system enabled the team to
 parallelize the work. Once an interface was established, work on the server and
 the GUI could be carried out at the same time. This allowed for more rapid
-development of the center stack system.
+development of the center stack system. The architecture of Carserver is shown
+in Figure \ref{fig:carserver}.
+
 
 \subsection{The Carpub Server}
 
@@ -351,7 +382,8 @@ state of charge and display it to the driver.
 
 To control components in the vehicle, applications can use the Carctl server.
 This server uses a request/response architecture. The client sends a request,
-Carctl executes the matching routine, then sends a response. The current
+Carctl executes the matching routine, then sends a response. Each routine can
+take arguments and return values to the requesting application. The current
 implementation of Carctl is very minimal, but it can be expanded to control any
 device on the high speed or low speed CAN bus in the future.
 
@@ -435,6 +467,6 @@ teams to contribute back to the projects, the GNU Public License is suggested.
 \section{Glossary}\label{app:glossary}
 \begin{description}
   \item[UWAFT] University of Waterloo Alternative Fuels Team
-\end{itemize}
+\end{description}
 
 \end{document}
