@@ -77,22 +77,20 @@ Technology Competition}
 
 % After this, we must create a letter of submission.
 \begin{letter}
-This report, entitled ``\thetitle", was prepared during my \theterm{} Work Term
-for my WKRPT 300 course. This is a self study report, and covers work that I 
+This report, entitled ``\thetitle", was prepared during my \theterm{} work term
+for my WKRPT 300 course. This is a self study report, and covers work that I
 performed with the University of Waterloo Alternative Fuels Team.
 
-The report covers my work with the center stack development group of the
+The report covers my work as part of the center stack development group of the
 Alternative Fuels Team, which is responsible for designing a human-machine
 interface for the team's hybrid vehicle. This report covers the design and
 development of the system. It has been written for the team, as well as
 to satisfy my Work Term report requirements.
 
-I have had no direct assistance from anyone, however I have made use of
-Freescale's application notes to implement the design.
-I hereby confirm that I have received no further help other than what is
-mentioned above in writing this report. I also confirm this report has not
-been previously submitted for academic credit at this or
-any other academic institution.
+I have had no direct assistance from anyone with the preparation of this report. 
+However I have made use of Freescale's application notes to implement the
+design, and the GUI which is covered in this report was primarily
+implemented by Rickey Si Rui Wang.
 
 % Note that I do not need to type out the boilerplate confirmation,
 % nor do I need to write a signature block.  This is generated for me.
@@ -107,9 +105,8 @@ The University of Waterloo Alternative Fuels Team is a Waterloo student
 team that participates in Advanced Vehicle Technology Competitions. Currently,
 the team is taking part in the EcoCAR 2 competition.
 
-For this project, I worked with a small group of students responsible for the
-center stack development of the vehicle. The main goal of the group was to
-implement a center stack for the vehicle. This piece of hardware consists of a
+For this project, I worked with a small group of students, with the main goal of 
+implementing a center stack for the vehicle. This piece of hardware consists of a
 touchscreen and an embedded computer that allows the driver to interact with the
 vehicle.
 
@@ -135,7 +132,27 @@ implement similar solutions.
 
 \section{Summary}
 
-Summary!
+The purpose of this report is to outline the design of a center stack
+for the University of Waterloo Alternative Fuels Team's EcoCAR 2 competition
+vehicle. The center stack is a piece of hardware that lets the driver interact
+with the vehicle. The scope of the report covers the hardware used to implement the
+stack, and the software that has been written to achieve the desired
+functionality.
+
+The main points covered in this report are a summary of the hardware used, the
+implementation of the operating system on the hardware, the software used
+communicate with the car, and the graphical user interface for the system.
+
+The major conclusions of this report is that the University of Waterloo
+Alternative Fuels Team now has a base system to build their center stack around.
+The implementation is modular, and will simplify future development by handling
+the lower level requirements of the system. These conclusions are covered in
+further detail in the conclusions section of this report.
+
+The major recommendations of this report are that there are many improvements that
+can be made to the system. This includes improvements to the hardware and
+software used to build the system. These recommendations are covered in depth in
+the recommendations section of this report.
 
 \end{onehalfspacing}
 
@@ -160,17 +177,34 @@ For the EcoCAR 2 Advanced Vehicle Technology Competition, the University of
 Waterloo Alternative Fuels Team (UWAFT) was tasked with designing, implementing,
 and testing a vehicle to reduce environmental impact while maintaining or
 improving consumer acceptability. The competition spans three years. In the
-first year, the team does design and modeling of the vehicle architecture. In
-year two, the team builds a prototype vehicle. In the third year, the team
-attempts to get the vehicle to a consumer ready state. The competition is
-currently in year two.
+first year, the team performs design and modeling tasks to design and justify
+the vehicle architecture that they have chosen to implement. In year two, the
+team builds a prototype vehicle. In the third year, the team attempts to get the 
+vehicle to a consumer ready state, ensuring that the vehicle is acceptable for
+consumers looking to purchase a modern automobile. UWAFT is designing an
+ethanol-electric series hybrid vehicle for the competition, which is currently
+in its second year.
 
 One component of the vehicle design is a center stack: a device that allows the
 driver to see critical information and interact with the vehicle. This center
 stack is required to display certain signals from the vehicle's Controller Area
-Network (CAN) bus in order to ensure that the vehicle is in a safe state. It
-also has the potential to increased the consumer acceptability of the vehicle
-by providing new features.
+Network (CAN) bus in order to ensure that the vehicle is in a safe state. Since
+the vehicle is in a prototype state, it is critical to monitor various signals
+to ensure that it is operating correctly. These signals include:
+
+\begin{itemize}
+    \item battery state of charge,
+    \item battery current,
+    \item battery temperature,
+    \item high voltage isolation resistance,
+    \item engine status,
+    \item engine temperature,
+    \item motor torque.
+\end{itemize}
+
+The center stack also has the potential to increase the consumer acceptability
+of the vehicle by providing new features. These features could include
+navigation, entertainment, and telematics.
 
 This report will detail the design of the center stack system. It will first
 explain the hardware used to implement the system. Next, the operating system
@@ -182,13 +216,22 @@ provided.
 \section{Hardware}
 
 The project was sponsored by Freescale Semiconductor, who provided hardware and
-technical support. A "Smart Application Blueprint for Rapid Engineering" (SABRE)
+technical support. A Smart Application Blueprint for Rapid Engineering (SABRE)
 platform based on the i.MX6 quad-core ARM Cortex-A9 application processor was
-given to all teams participating in the competition. This platform provides a
+given to all teams participating in the competition. This hardware platform is
+designed for developing automotive systems. It includes a
 powerful Central Processing Unit (CPU) and Graphics Processing Unit (GPU) which
-is capable of running complex applications.
+are capable of running complex applications. The SABRE platform is shown in
+figure \ref{ref:sabre}.
 
-The standard for communications between automotive controllers is CAN. This
+\begin{figure}
+    \centering
+    \includegraphics[width=6in]{sabre}
+    \caption[The SABRE Platform]{The SABRE Platform}
+    \label{ref:sabre}
+\end{figure}
+
+The standard method of communication between automotive controllers is CAN. This
 protocol provides reliable communication that is suitable for high noise
 environments such as an automobile. The SABRE platform provides one high speed
 and one low speed CAN interface. These are implemented using the Freescale
@@ -202,21 +245,22 @@ Heating, Ventilation, and Air Conditioning (HVAC) system. This allows the center
 stack to control the stock HVAC system based on inputs to the touchscreen.
 
 The touchscreen was also provided by Freescale Semiconductor. It is a 10.1 inch
-tablet touchscreen, which communicates over a Low Voltage Differential Signaling
+tablet touchscreen, which communicates over a Low-voltage Differential Signaling
 (LVDS) interface with the SABRE platform. The capacitive touch input is
 processed by an eGalax controller, which is supported in the Linux kernel. The
 screen is used in a portrait orientation so that it fits in the vehicle's
-dashboard.
+dashboard. This orientation maximizes available screen space while meeting the
+space constraints of the stock vehicle dashboard.
 
 The system is powered by the vehicle's 12 volt system. It was connected to the
 auxiliary power port, often called the cigarette lighter port. This port is
 only switched on when the vehicle's key is in the accessory or run states,
 ensuring that the system cannot drain the vehicle's 12 volt battery when the car
-is off. While connecting to this power source was convenient, it is not ideal
+is powered off. While connecting to this power source was convenient, it is not ideal
 since the system must be turned off when the car is powered off. The system must
 also start from a fully powered off state every time the car is started. In the
-future, it may be necessary to change to an always on power source to allow the 
-system to control its own power state. This would allow for the system to use a 
+future, it may be necessary to change to an always on power source to allow the
+system to control its own power state. This would allow for the system to use a
 low power sleep or hibernate mode to enable a faster boot up time without taxing 
 the car's 12 volt battery.
 
@@ -230,7 +274,7 @@ This additional hardware creates a wealth of new opportunities.
 
 \section{Operating System}
 
-The operating system for the system consists of three main parts: the
+The operating system for the system consists of three main components: the
 bootloader, the kernel, and the root filesystem. These components are loaded
 onto a memory card, which the system executes code from when it is powered on.
 
@@ -244,25 +288,26 @@ The bootloader allows for parameters to be passed to the Linux kernel. In order
 to set the board up properly, the 'can0' argument must be passed to enable the
 high speed CAN channel. Also, the correct video argument must be specified
 depending on the device that is to be used. The bootloader settings can be
-changed by connecting to the SABRE's serial port and sending commands to the
+changed by connecting to the SABRE platform's serial port and sending commands to the
 bootloader.
 
 \subsection{Kernel}
 
 The kernel is responsible for controlling the hardware during execution, and
 providing a hardware abstraction layer for programs. The system uses the Linux
-kernel. Linux was chosen for a number of reasons. New versions of Linux provide
-support for the i.MX6Q which can be enabled by compiling a custom kernel.
-Support for CAN and the Freescale FlexCAN peripheral is also available in new
-kernels, along with support for the eGalax touchscreen.
+kernel. Linux was chosen since it provides support for all of the required
+hardware. New versions of Linux provide support for the i.MX6Q which can be
+enabled by compiling a custom kernel. Support for CAN and the Freescale FlexCAN
+peripheral is also available in new kernels, along with support for the
+eGalax touchscreen.
 
 In order to support the SABRE hardware, a custom kernel had to be built. This
-was done by using the latest kernel sources and configuring for the i.MX6Q,
-eGalax touchscreen, and the FlexCAN peripheral.
+was done by using the latest kernel sources and selecting configuration options
+for the i.MX6Q, eGalax touchscreen, and the FlexCAN peripheral.
 
 QNX was evaluated as an alternative to Linux for this project. However, support
 for CAN was not reliable. Since CAN is critical to the design of the system, it
-was decided that QNX would not be a viable choice.
+was decided that QNX would not be a viable kernel for the project.
 
 \subsection{Root Filesystem}
 
@@ -271,13 +316,14 @@ provides all of the other functionality. Freescale provides two options for root
 filesystems: Ubuntu and Linux Target Image Builder (LTIB).
 
 The Ubuntu root filesystem provided by Freescale is a full Ubuntu Desktop
-system. It is the Oneiric Ocelot release, which is from October, 2011 and will
-lose support soon. Since the desktop release is far too bloated for the system,
-and support will soon be dropped, this was not an ideal solution.
+system. It is the Oneiric Ocelot release, which is from October 2011, and will
+not be supported in the near future. Since the desktop release is far too bloated
+for the system, and support will soon be dropped, this was not an ideal
+solution.
 
-LTIB is provided for users that wish to build their own root filesystem. It does
+LTIB is provided by Freescale for users that wish to build their own root filesystem. It does
 this by cross compiling software for the target. Unfortunately, much of the
-software provided by LTIB is rather out of date. Also, LTIB does not provide a
+software provided by LTIB is outdated. Also, LTIB does not provide a
 packaging system to allow easy deployment of new software. For these reasons,
 LTIB was not considered to be ideal.
 
@@ -305,11 +351,12 @@ deploy this package to their target system.
 To allow the filesystem to be manipulated on a host computer which uses a
 different architecture than the target, QEMU user emulation is used. This type
 of emulation allows binaries for a different architecture to be executed on the
-host computer. For example, a x86 host operating system is used to build the
+host computer. For example, a x86 host operating system can be used to build the
 root filesystem for the ARM target.
 
-The tool is built using GNU Make CITE. Using a collection of Makefiles, the 
-tool will execute the steps needed to set up the environment:
+The tool is built using GNU Make. It builds a minimal system that has
+support for networking and QEMU user emulation. Using a collection of
+Makefiles, the tool executes the steps needed to set up the environment:
 
 \begin{enumerate}
   \item Download the specified version of the tarball,
@@ -323,19 +370,25 @@ Once this is complete, the user can specify packages to install. The Debian
 Advanced Package Tool (APT) will fetch and install the packages. The user can
 also use other commands within the root filesystem on their host machine. This
 allows for source to be compiled using a faster computer than the target, such
-as a desktop.
+as a desktop. It also allows for the creation of new user accounts, so that
+there are valid credentials on the system when it is loaded onto the target.
 
 The core-builder tool has been released under the GNU Public License
-CITE. It will be provided to other teams in the EcoCAR 2 competition to assist in
-setting up a root filesystem for the Freescale SABRE platform.
+\cite{ref:gpl}.
+It will be provided to other teams in the EcoCAR 2 competition to assist in
+setting up a root filesystem for the Freescale SABRE platform. Possible
+improvements to include allowing more settings to be automatically configured,
+providing support for automatically building packages from source, and providing
+support for installing Debian packages that are not in the Ubuntu repository
+from package files.
 
 \section{Carserver}
 
 In order to provide a bridge between applications running on the center stack
 system and the vehicle's CAN bus, a custom daemon was created. This daemon uses
-Socket CAN CITE to communicate with the vehicle, and ZeroMQ CITE to communicate
-with other applications on the system. It consists of two separate servers:
-Carpub and Carctl.
+Socket CAN to communicate with the vehicle's CAN bus, and ZeroMQ to
+communicate with other applications on the system. It consists of two separate
+servers: Carpub and Carctl.
 
 A number of inter-process communication tools were considered for the
 implementation of Carserver. ZeroMQ was chosen for a number of reasons. First,
@@ -344,20 +397,34 @@ supporting libraries in a variety of languages. Finally, it is network based,
 allowing the possibility of expanding to other devices over a traditional
 Ethernet or WiFi network.
 
+Carserver is written in C, which allows for access to CAN bus through standard
+UNIX Sockets. In order to handle the multitasking required to run multiple
+servers, POSIX Threading is used. The syslog daemon is used to log informative
+and debug messages from the application. Using syslog allows the developer to
+view debug messages over the hardware serial port, which is helpful during
+debugging.
+
 \begin{figure}
     \centering
-    \includegraphics[width=6.0in]{carserver}
-    \caption[The Carserver Architecture]
-            {The Carserver Architecture}
-    \label{fig:carserver}
+    \includegraphics[height=7in]{carserver}
+    \caption[The Carserver Architecture]{The Carserver Architecture}
+    \label{ref:carserver}
 \end{figure}
 
 Using a server and client model for developing the system enabled the team to
 parallelize the work. Once an interface was established, work on the server and
 the GUI could be carried out at the same time. This allowed for more rapid
 development of the center stack system. The architecture of Carserver is shown
-in Figure \ref{fig:carserver}.
+in figure \ref{ref:carserver}.
 
+There are many possible improvements to Carserver. Currently, filters for messages that
+are to be received must be programmed into the application when it is compiled. This
+could be replaced with a configuration file, which would allow for users to
+change the settings without recompiling. Ideally, this configuration file would
+be compatible with the standard CANdb file used by Vector CAN software.
+Currently, Carserver uses no authentication, and instead depends on only trusted
+devices being on the network. If untrusted devices are to be added to the
+network, a new chain of trust must be established to prevent malicious activity.
 
 \subsection{The Carpub Server}
 
@@ -374,6 +441,12 @@ devices on the network, without introducing security risks. For example, the
 center stack could publish data to a smartphone over a wireless network. While
 this has not yet been implemented, it would be trivial to add the functionality
 in year three of the competition.
+
+For testing purposes, Carpub allows developers to put it into a fake data mode.
+This mode does not connect to the CAN bus, but instead generates arbitrary data
+that is sent to subscribing applications over the standard protocol. This mode
+is useful for development and testing, since it allows application developers to
+test their software without using the target hardware.
 
 An example application of the Carpub server is to read the battery system's
 state of charge and display it to the driver.
@@ -394,20 +467,78 @@ on the center stack, preventing malicious network access.
 
 \section{The Graphical User Interface}
 
-The system's GUI is implemented using Python CITE and the pygame CITE library.
+The system's GUI is implemented using Python and the pygame library.
 These tools were chosen to allow for rapid development of a prototype GUI. The
-GUI was primarily designed by Rickey Si Rui Wang.
+GUI was primarily designed by Rickey Si Rui Wang. The GUI acts as a subscriber
+to the Carpub server, and can send requests to the Carctl server.
+Since the GUI and Carserver are completely separate applications, they could be
+developed in parallel. By connecting to a Carserver sending fake data,
+the GUI can be developed and tested on a desktop computer, then transfered to
+the target hardware.
 
 The GUI allows for the user to view information from the vehicle. It displays
 the signals required by the EcoCAR 2 Non-Year Specific rules, and other messages
 that are relevant to the operation of the vehicle. Since this is a prototype
 vehicle, error codes can easily be displayed in the GUI. These codes assist with
-debugging the vehicle's control logic during on-road testing.
+debugging the vehicle's control logic during on-road testing. Safety critical
+messages display as a full screen pop-up. This will alert the driver that
+something has failed and safety precautions must be taken. For example, a low
+high voltage isolation resistance, which indicates a ground fault of the
+vehicle's high voltage bus, is displayed as a full screen pop-up. This is
+critical since this type of fault greatly increases the chance of electric
+shock and electrocution.
 
 One challenge with developing the GUI was the GPU support on the Freescale
 hardware. Unfortunately, hardware rendering is not currently supported. The team
 plans to work with Freescale to resolve the issues, which will allow for more
-complex GUIs to be built in the future.
+complex GUIs to be built in the future. With hardware rendering support, a 3D
+engine based on OpenGL could be utilized to create more impressive graphics.
+Hardware video decoding would allow for seamless playback of compressed video
+files. These types of features will be available once GPU support is
+implemented, and could help to increase the consumer acceptability of the
+vehicle. The current implementation of the GUI is shown in figure \ref{ref:gui}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=6in]{gui}
+    \caption[The Graphical User Interface]{The Graphical User Interface}
+    \label{ref:gui}
+\end{figure}
+
+\section{Conclusions}
+
+From the analysis in the report body, it is concluded that the University of
+Waterloo Alternative Fuels Team now has a base system for their center stack
+which can be improved upon. This system comprises of several components
+including the hardware, operating system, low level software, and graphical user
+interface. The modular design of the components will ease development in the
+future.
+
+The systems hardware has been implemented using the SABRE platform donated by
+Freescale semiconductor, connected to the vehicle's auxiliary power, high speed
+CAN bus, and low speed CAN bus. This allows for easy integration, and enables
+the hardware to communicate with the various controllers in the vehicle.
+
+The operating system uses the u-boot bootloader to initialize the hardware. It
+then invokes the Linux kernel, which has been compiled for this specific
+application. The kernel runs software from the root filesystem, which includes
+the software needed for the center stack applications.
+
+To ease with development of a root filesystem, core-builder was created. This
+tool, based on GNU Make, allows the user to build Ubuntu Core based root
+filesystem. This tool will be released to the other teams in the EcoCAR 2
+competition, and will be released under an open source license to encourage
+contribution.
+
+The Carserver software handles dispatching data from the vehicle's CAN bus to
+applications running on the center stack. It has two servers, one which
+publishes data, and one that accepts requests. This system will also be given to
+other EcoCAR 2 teams to aid with their center stack projects in the future.
+
+The GUI for the system is based on Python and pygame, and is currently limited
+by the lack of GPU support. This GUI is functional, but has many improvements
+that could be made in the future. Due to the modular design of the system, the
+GUI can be redesigned independently of the other system components.
 
 \section{Recommendations}
 
@@ -426,16 +557,18 @@ functionality could be added. This could include the ability to lock and unlock
 doors, read GPS information from the vehicle's telematics controller, or adjust
 vehicle settings.
 
-To allow for more powerful GUI applications, the GPU support must be improved.
-The team should work with Freescale to rectify the issues with the GPU.
+To allow for more powerful GUI applications, the GPU support must be
+implemented. The team should work with Freescale to rectify the issues with GPU
+support.
 
 There are many possibilities for future expansion by adding cellular network
-access to the vehicle including telematics, maps, and social features. If these 
+access to the vehicle including telematics, maps, and social features. If these
 are to be explored, the security of the system must be analysed.
 
 Finally, to assist other teams in the EcoCAR 2 competition, the Carserver and
 core-builder tools should be released under an open source license. To encourage
-teams to contribute back to the projects, the GNU Public License is suggested.
+teams to contribute back to the projects, the GNU Public License \cite{ref:gpl} 
+is suggested.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% BACK MATTER
@@ -454,7 +587,7 @@ teams to contribute back to the projects, the GNU Public License is suggested.
 %   LaTeX Warning: There were undefined references.
 % This is normal.  Now you run BiBTeX in order to generate the proper
 % layout for the references.  After this, you run LaTeX once more.
-\bibliography{uw-wkrpt-bib}
+\bibliography{wkrpt}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% APPENDICES
@@ -466,6 +599,15 @@ teams to contribute back to the projects, the GNU Public License is suggested.
 
 \section{Glossary}\label{app:glossary}
 \begin{description}
+  \item[APT] Advanced Package Tool
+  \item[CAN] Controller Area Network
+  \item[CPU] Central Processing Unit
+  \item[GPU] Graphics Processing Unit
+  \item[GUI] Graphical User Interface
+  \item[HVAC] Heating, Ventilation, and Air Conditioning
+  \item[LVDS] Low-voltage Differential Signaling
+  \item[POSIX] Portable Operating System Interface
+  \item[SABRE] Smart Application Blueprint for Rapid Engineering
   \item[UWAFT] University of Waterloo Alternative Fuels Team
 \end{description}
 
